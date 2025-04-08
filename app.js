@@ -8,7 +8,7 @@ const connectDB = require('./db/connect');
 //const authenticateUser = require('./middleware/authentication');
 
 //const authRouter = require('./routes/auth');
-//const fictionsRouter = require('./routes/fictions');
+const fictionsRouter = require('./routes/fictions');
 
 app.use(express.json());
 
@@ -16,8 +16,8 @@ app.get('/', (req, res) => {
     res.send("Main")
 })
 
-//app.use('/fiction-api/v1/auth');
-//app.use('/fiction-api/v1/fictions'); //authenticateUser, fictionsRouter
+//app.use('/fictions-api/v1/auth', authRouter);
+app.use('/fictions-api/v1/fictions', fictionsRouter); //authenticateUser, fictionsRouter
 
 const port = process.env.PORT || 5000;
 

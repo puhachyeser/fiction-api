@@ -1,4 +1,3 @@
-/*
 const express = require('express')
 
 const router = express.Router()
@@ -16,4 +15,3 @@ router.route('/').post(createFiction).get(getAllFictions)
 router.route('/:id').get(getFiction).delete(deleteFiction).patch(updateFiction)
 
 module.exports = router
-*/
