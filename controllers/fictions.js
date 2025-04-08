@@ -11,7 +11,14 @@ const getAllFictions = async (req, res) => {
 }
 
 const getFiction = async (req, res) => {
+    const { params: { id: fictionId }} = req
 
+    const fiction = await Book.findOne({_id: fictionId})
+    if (!fiction) {
+        res.status(StatusCodes.NOT_FOUND).json("not found error")
+        //throw new NotFoundError(`No fiction with id ${fictionId}`)
+    }
+    res.status(StatusCodes.OK).json({ fiction })
 }
 
 const createFiction = async (req, res) => {
@@ -21,11 +28,26 @@ const createFiction = async (req, res) => {
 }
 
 const updateFiction = async (req, res) => {
+    const { params: { id: fictionId }} = req
+    // TODO: discriminator for different type of models. All models in one file Fiction.js
 
+    const fiction = await Book.findOneAndUpdate({_id: fictionId}, req.body, { new: true, runValidators: true })
+    if (!fiction) {
+        res.status(StatusCodes.NOT_FOUND).json("not found error")
+        //throw new NotFoundError(`No fiction with id ${fictionId}`)
+    }
+    res.status(StatusCodes.OK).json({ fiction })
 }
 
 const deleteFiction = async (req, res) => {
+    const { params: { id: fictionId }} = req
 
+    const fiction = await Book.findOneAndDelete({_id: fictionId})
+    if (!fiction) {
+        res.status(StatusCodes.NOT_FOUND).json("not found error")
+        //throw new NotFoundError(`No fiction with id ${fictionId}`)
+    }
+    res.status(StatusCodes.OK).send()
 }
 
 module.exports = {
