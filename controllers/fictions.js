@@ -1,6 +1,6 @@
 const Fiction = require('../models/Fiction')
 const { StatusCodes } = require('http-status-codes')
-//const { BadRequestError, NotFoundError } = require('../errors')
+const { BadRequestError, NotFoundError } = require('../errors')
 
 const getModelType = (req) => {
     const { type } = req.body;
@@ -23,37 +23,43 @@ const getModelType = (req) => {
 }
 
 const getAllFictions = async (req, res) => {
-    //const fictions = await Book.find({ createdBy: req.user.userId }).sort('createdAt')
-    const fictions = await Fiction.find().sort('createdAt')
+    const fictions = await Fiction.find({ createdBy: req.user.userId }).sort('createdAt')
     res.status(StatusCodes.OK).json({ fictions, count: fictions.length })
 }
 
 const getFiction = async (req, res) => {
-    const { params: { id: fictionId }} = req
+    const {
+        user: { userId },
+        params: { id: fictionId },
+      } = req
 
-    const fiction = await Fiction.findOne({_id: fictionId})
+    const fiction = await Fiction.findOne({createdBy: userId, _id: fictionId})
     if (!fiction) {
         res.status(StatusCodes.NOT_FOUND).json("not found error")
-        //throw new NotFoundError(`No fiction with id ${fictionId}`)
+        throw new NotFoundError(`No fiction with id ${fictionId}`)
     }
     res.status(StatusCodes.OK).json({ fiction })
 }
 
 const createFiction = async (req, res) => {
-    //req.body.createdBy = req.user.userId    after auth
+    req.body.createdBy = req.user.userId
     let Model = getModelType(req)
     const fiction = await Model.create(req.body)
     res.status(StatusCodes.CREATED).json({ fiction })
 }
 
 const updateFiction = async (req, res) => {
-    const { params: { id: fictionId }} = req
+    const {
+        //body: { title, description, releaseYear },
+        user: { userId },
+        params: { id: fictionId },
+      } = req
     let Model = getModelType(req)
 
-    const fiction = await Model.findOneAndUpdate({_id: fictionId}, req.body, { new: true, runValidators: true })
+    const fiction = await Model.findOneAndUpdate({_id: fictionId, createdBy: userId}, req.body, { new: true, runValidators: true })
     if (!fiction) {
         res.status(StatusCodes.NOT_FOUND).json("not found error")
-        //throw new NotFoundError(`No fiction with id ${fictionId}`)
+        throw new NotFoundError(`No fiction with id ${fictionId}`)
     }
     res.status(StatusCodes.OK).json({ fiction })
 }
@@ -64,7 +70,7 @@ const deleteFiction = async (req, res) => {
     const fiction = await Fiction.findOneAndDelete({_id: fictionId})
     if (!fiction) {
         res.status(StatusCodes.NOT_FOUND).json("not found error")
-        //throw new NotFoundError(`No fiction with id ${fictionId}`)
+        throw new NotFoundError(`No fiction with id ${fictionId}`)
     }
     res.status(StatusCodes.OK).send()
 }

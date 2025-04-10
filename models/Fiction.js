@@ -17,7 +17,12 @@ const BaseFictionSchema = new mongoose.Schema({
         required: [true, 'Please provide release year'],
         maxlength: 4,
         validate: /^[12][0-9]{3}$/
-    }
+    },
+    createdBy: {
+        type: mongoose.Types.ObjectId,
+        ref: 'User',
+        required: [true, 'Please provide user'],
+    },
     }, { timestamps: true, discriminatorKey: 'type', collection: 'fictions' });
   
 const Fiction = mongoose.model('Fiction', BaseFictionSchema);
