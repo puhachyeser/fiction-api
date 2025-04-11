@@ -75,10 +75,23 @@ const deleteFiction = async (req, res) => {
     res.status(StatusCodes.OK).send()
 }
 
+const getFictionByType = async (req, res) => {
+    const { params: { type: fictionType }} = req
+
+    const modelNames = Object.values(Fiction.discriminators).map(model => model.modelName)
+    if (!modelNames.includes(`${fictionType}`)) {
+        throw new NotFoundError(`Fiction type ${fictionType} does not exist`)
+    }
+    
+    const fictions = await Fiction.find({ createdBy: req.user.userId, type: fictionType }).sort('createdAt')
+    res.status(StatusCodes.OK).json({ fictions, count: fictions.length })
+}
+
 module.exports = {
     createFiction,
     deleteFiction,
     getAllFictions,
     updateFiction,
     getFiction,
+    getFictionByType
 }

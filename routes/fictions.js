@@ -8,10 +8,12 @@ const {
   getAllFictions,
   updateFiction,
   getFiction,
+  getFictionByType
 } = require('../controllers/fictions')
 
 router.route('/').post(createFiction).get(getAllFictions)
 
+router.route('/type/:type').get(getFictionByType)
 router.route('/:id').get(getFiction).delete(deleteFiction).patch(updateFiction)
 
 module.exports = router
