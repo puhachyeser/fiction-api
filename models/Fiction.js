@@ -48,7 +48,7 @@ const Movie = Fiction.discriminator('movie', new mongoose.Schema({
     },
     duration: {
         type: String,
-        required: [true, 'Please provide number of pages'],
+        required: [true, 'Please provide duration of the movie'],
         maxlength: 10,
         validate: /^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$/
     }

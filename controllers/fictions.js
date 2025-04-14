@@ -1,6 +1,6 @@
 const Fiction = require('../models/Fiction')
 const { StatusCodes } = require('http-status-codes')
-const { BadRequestError, NotFoundError } = require('../errors')
+const { NotFoundError } = require('../errors')
 
 const getModelType = (req) => {
     const { type } = req.body;
@@ -50,7 +50,6 @@ const createFiction = async (req, res) => {
 
 const updateFiction = async (req, res) => {
     const {
-        //body: { title, description, releaseYear },
         user: { userId },
         params: { id: fictionId },
       } = req
