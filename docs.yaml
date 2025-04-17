@@ -1,0 +1,216 @@
+---
+info:
+  _postman_id: a39c31eb-d054-46a0-a26c-9df8f89d68b7
+  name: fiction-api
+  schema: https://schema.getpostman.com/json/collection/v2.1.0/collection.json
+  _exporter_id: '43072468'
+item:
+- name: Get a fiction
+  protocolProfileBehavior:
+    disableBodyPruning: true
+  request:
+    auth:
+      type: bearer
+      bearer:
+      - key: token
+        value: "{{accessToken}}"
+        type: string
+    method: GET
+    header:
+    - key: Authorization
+      value: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2N2Y3N2Y3ODNmOTQ0OGJjMGU0NjQxMTUiLCJuYW1lIjoiUGV0ZXIiLCJpYXQiOjE3NDQyNzMyNzMsImV4cCI6MTc0NTQ4Mjg3M30.9tDRPe48BlNVK617g15SZNYq-1hKHEATFmqkVV2zpcw
+      type: text
+      disabled: true
+    body:
+      mode: raw
+      raw: ''
+      options:
+        raw:
+          language: json
+    url:
+      raw: "{{URL}}/fictions/67f77eb63f9448bc0e46410e"
+      host:
+      - "{{URL}}"
+      path:
+      - fictions
+      - 67f77eb63f9448bc0e46410e
+  response: []
+- name: Get all fictions
+  request:
+    auth:
+      type: bearer
+      bearer:
+      - key: token
+        value: "{{accessToken}}"
+        type: string
+    method: GET
+    header:
+    - key: Authorization
+      value: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2N2Y3N2Y3ODNmOTQ0OGJjMGU0NjQxMTUiLCJuYW1lIjoiUGV0ZXIiLCJpYXQiOjE3NDQyNzMyNzMsImV4cCI6MTc0NTQ4Mjg3M30.9tDRPe48BlNVK617g15SZNYq-1hKHEATFmqkVV2zpcw
+      type: text
+    url:
+      raw: "{{URL}}/fictions/"
+      host:
+      - "{{URL}}"
+      path:
+      - fictions
+      - ''
+  response: []
+- name: Get fiction by type
+  request:
+    auth:
+      type: bearer
+      bearer:
+      - key: token
+        value: "{{accessToken}}"
+        type: string
+    method: GET
+    header: []
+    url:
+      raw: "{{URL}}/fictions/type/game"
+      host:
+      - "{{URL}}"
+      path:
+      - fictions
+      - type
+      - game
+  response: []
+- name: Login
+  event:
+  - listen: test
+    script:
+      exec:
+      - "const jsonData = pm.response.json()\r"
+      - pm.globals.set("accessToken", jsonData.token)
+      type: text/javascript
+      packages: {}
+  request:
+    auth:
+      type: noauth
+    method: POST
+    header: []
+    body:
+      mode: raw
+      raw: "{\r\n    \"email\": \"daniel@gmail.com\",\r\n    \"password\": \"Daniel12345\"\r\n}"
+      options:
+        raw:
+          language: json
+    url:
+      raw: "{{URL}}/auth/login"
+      host:
+      - "{{URL}}"
+      path:
+      - auth
+      - login
+  response: []
+- name: Register
+  event:
+  - listen: test
+    script:
+      exec:
+      - "const jsonData = pm.response.json()\r"
+      - pm.globals.set("accessToken", jsonData.token)
+      type: text/javascript
+      packages: {}
+  request:
+    auth:
+      type: noauth
+    method: POST
+    header: []
+    body:
+      mode: raw
+      raw: "{\r\n    \"name\": \"Peter\",\r\n    \"password\": \"Peter12345\",\r\n
+        \   \"email\": \"peter@gmail.com\"\r\n}"
+      options:
+        raw:
+          language: json
+    url:
+      raw: "{{URL}}/auth/register"
+      host:
+      - "{{URL}}"
+      path:
+      - auth
+      - register
+  response: []
+- name: Create a fiction
+  request:
+    auth:
+      type: bearer
+      bearer:
+      - key: token
+        value: "{{accessToken}}"
+        type: string
+    method: POST
+    header:
+    - key: Authorization
+      value: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2N2Y3N2M4NjFiMjY3ZjQxYWUwYmEyZGYiLCJuYW1lIjoiRGFuaWVsIiwiaWF0IjoxNzQ0MjcyOTIxLCJleHAiOjE3NDU0ODI1MjF9.VrOlp1BD1ly6t-04QUuh0RW35cGXU0PimZdzvQkmpXA
+      type: text
+      disabled: true
+    body:
+      mode: raw
+      raw: "{\r\n    \"type\": \"game\",\r\n    \"title\": \"Lord of The Rings: the
+        Game 2\",\r\n    \"description\": \"LOTR\",\r\n    \"releaseYear\": \"2007\",\r\n
+        \   \"timeToBeat\": \"46h\",\r\n    \"studio\": \"NoMan studio\"\r\n}"
+      options:
+        raw:
+          language: json
+    url:
+      raw: "{{URL}}/fictions/"
+      host:
+      - "{{URL}}"
+      path:
+      - fictions
+      - ''
+  response: []
+- name: Update a fiction
+  request:
+    auth:
+      type: bearer
+      bearer:
+      - key: token
+        value: "{{accessToken}}"
+        type: string
+    method: PATCH
+    header:
+    - key: Authorization
+      value: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2N2Y3N2Y3ODNmOTQ0OGJjMGU0NjQxMTUiLCJuYW1lIjoiUGV0ZXIiLCJpYXQiOjE3NDQyNzMyNzMsImV4cCI6MTc0NTQ4Mjg3M30.9tDRPe48BlNVK617g15SZNYq-1hKHEATFmqkVV2zpcw
+      type: text
+      disabled: true
+    body:
+      mode: raw
+      raw: "{\r\n    \"description\": \"LOTR 2. Best book ever made\",\r\n    \"releaseYear\":
+        1956,\r\n    \"type\": \"book\",\r\n    \"author\": \"J.R.R. Tolkien\",\r\n
+        \   \"pages\": 220\r\n}"
+      options:
+        raw:
+          language: json
+    url:
+      raw: "{{URL}}/fictions/67f77eb63f9448bc0e46410e"
+      host:
+      - "{{URL}}"
+      path:
+      - fictions
+      - 67f77eb63f9448bc0e46410e
+  response: []
+- name: Delete a fiction
+  request:
+    auth:
+      type: bearer
+      bearer:
+      - key: token
+        value: "{{accessToken}}"
+        type: string
+    method: DELETE
+    header:
+    - key: Authorization
+      value: ''
+      type: text
+      disabled: true
+    url:
+      raw: "{{URL}}/fictions/67f61841d4bca3bf644a4da1"
+      host:
+      - "{{URL}}"
+      path:
+      - fictions
+      - 67f61841d4bca3bf644a4da1
+  response: []
