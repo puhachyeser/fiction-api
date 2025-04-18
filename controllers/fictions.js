@@ -64,9 +64,12 @@ const updateFiction = async (req, res) => {
 }
 
 const deleteFiction = async (req, res) => {
-    const { params: { id: fictionId }} = req
+    const {
+        user: { userId },
+        params: { id: fictionId },
+      } = req
 
-    const fiction = await Fiction.findOneAndDelete({_id: fictionId})
+    const fiction = await Fiction.findOneAndDelete({createdBy: userId, _id: fictionId})
     if (!fiction) {
         res.status(StatusCodes.NOT_FOUND).json("not found error")
         throw new NotFoundError(`No fiction with id ${fictionId}`)
