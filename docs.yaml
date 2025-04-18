@@ -3,7 +3,7 @@ info:
   title: fiction-api
   version: 1.0.0
 servers:
-  - url: http://{{url}}
+  - url: https://fictions-api.onrender.com/fictions-api/v1
 components:
   securitySchemes:
     bearerAuth:
